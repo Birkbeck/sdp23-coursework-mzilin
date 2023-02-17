@@ -167,25 +167,25 @@ There are two components to this coursework assignment.
 
 2. Study the implementation of a concrete subclass `AddInstruction` of `Instruction` and associated test class `AddInstructionTest`.
 
-4. Now create a subclass of `Instruction` for each of the remaining six kinds of SML instructions and fix the method `Translator.getInstruction` so that it properly translates that kind of instruction.
+3. Now create a subclass of `Instruction` for each of the remaining six kinds of SML instructions and fix the method `Translator.getInstruction` so that it properly translates that kind of instruction.
    *Recommended*: write one instruction at a time and test it out thoroughly, before proceeding to the next!
 
-5. Start with the `add` instruction, because the code for translating it is already there — 
+4. Start with the `add` instruction, because the code for translating it is already there — 
    in method `Translator.getInstruction`.  Initially, the program will not compile because there is no class 
    for the instruction `add`; once that class is written, the program will compile.
 
-6. For each instruction, the subclass needs appropriate fields, a constructor, 
+5. For each instruction, the subclass needs appropriate fields, a constructor, 
    `toString` method, and a method `execute`; `toString` and `execute` should override 
    the same methods in the `Instruction` class using appropriate annotations.
 
-7. As you do this, you will see that each successive class can be written by 
+6. As you do this, you will see that each successive class can be written by 
    duplicating a previous one and modifying it (obviously avoiding too much repeated code).
 
-8. After you finish writing a subclass for an SML instruction (except for `add`), 
+7. After you finish writing a subclass for an SML instruction (except for `add`), 
    you will have to add code to the method `Translator.getInstruction` to translate 
    that instruction. The existing code for translating `add` should help you with this.
 
-9. There are also a few places in the code with TODO: labels - follow the instructions to
+8. There are also a few places in the code with TODO: labels - follow the instructions to
    improve the provided code (or implement missing methods as required). 
    Use the Java Stream API whenever possible instead of loops.
 
