@@ -19,9 +19,9 @@ amongst other skills.
 
 ## Details
 
-**Name**: Your name should appear here
+**Name**: Marius Zilinskas
 
-**Your userid**: e.g., myname01
+**Your userid**: mzilin01
 
 Please do not forget to complete this part as too often we have "orphaned" repositories,
 which can require months to sort out.
@@ -165,26 +165,27 @@ There are two components to this coursework assignment.
 1. Complete the methods in the `Instruction` class — this may require you to add some fields,  
    which should be *protected*, so that they are accessible in any subclasses.
 
-2. Now create a subclass of `Instruction` for each kind of SML instruction and fix 
-   the method `Translator.instruction` so that it properly translates that kind of instruction.
+2. Study the implementation of a concrete subclass `AddInstruction` of `Instruction` and associated test class `AddInstructionTest`.
+
+3. Now create a subclass of `Instruction` for each of the remaining six kinds of SML instructions and fix the method `Translator.getInstruction` so that it properly translates that kind of instruction.
    *Recommended*: write one instruction at a time and test it out thoroughly, before proceeding to the next!
 
-3. Start with the `add` instruction, because the code for translating it is already there — 
-   in method `Translator.instruction`.  Initially, the program will not compile because there is no class 
+4. Start with the `add` instruction, because the code for translating it is already there — 
+   in method `Translator.getInstruction`.  Initially, the program will not compile because there is no class 
    for the instruction `add`; once that class is written, the program will compile.
 
-4. For each instruction, the subclass needs appropriate fields, a constructor, 
+5. For each instruction, the subclass needs appropriate fields, a constructor, 
    `toString` method, and a method `execute`; `toString` and `execute` should override 
    the same methods in the `Instruction` class using appropriate annotations.
 
-5. As you do this, you will see that each successive class can be written by 
+6. As you do this, you will see that each successive class can be written by 
    duplicating a previous one and modifying it (obviously avoiding too much repeated code).
 
-6. After you finish writing a subclass for an SML instruction (except for `add`), 
-   you will have to add code to the method `Translator.instruction` to translate 
+7. After you finish writing a subclass for an SML instruction (except for `add`), 
+   you will have to add code to the method `Translator.getInstruction` to translate 
    that instruction. The existing code for translating `add` should help you with this.
 
-7. There are also a few places in the code with TODO: labels - follow the instructions to
+8. There are also a few places in the code with TODO: labels - follow the instructions to
    improve the provided code (or implement missing methods as required). 
    Use the Java Stream API whenever possible instead of loops.
 
