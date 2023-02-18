@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  *
- * @author ...
+ * @author Marius Zilinskas
  */
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();

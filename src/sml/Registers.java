@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author ...
+ * @author Marius Zilinskas
  */
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
