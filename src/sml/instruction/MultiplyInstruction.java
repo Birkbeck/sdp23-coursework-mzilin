@@ -10,13 +10,13 @@ import sml.RegisterName;
  * @author Marius Zilinskas
  */
 
-public class AddInstruction extends Instruction {
+public class MultiplyInstruction extends Instruction {
 	private final RegisterName result;
 	private final RegisterName source;
 
-	public static final String OP_CODE = "add";
+	public static final String OP_CODE = "mul";
 
-	public AddInstruction(String label, RegisterName result, RegisterName source) {
+	public MultiplyInstruction(String label, RegisterName result, RegisterName source) {
 		super(label, OP_CODE);
 		this.result = result;
 		this.source = source;
@@ -26,7 +26,7 @@ public class AddInstruction extends Instruction {
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);
 		int value2 = m.getRegisters().get(source);
-		m.getRegisters().set(result, value1 + value2);
+		m.getRegisters().set(result, value1 * value2);
 		return NORMAL_PROGRAM_COUNTER_UPDATE;
 	}
 

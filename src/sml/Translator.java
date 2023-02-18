@@ -15,7 +15,7 @@ import static sml.Registers.Register;
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author Marius Zilinskas
  */
 public final class Translator {
 
@@ -39,6 +39,7 @@ public final class Translator {
 
             // Each iteration processes line and reads the next input line into "line"
             while (sc.hasNextLine()) {
+                System.out.println(sc.nextLine());
                 line = sc.nextLine();
                 String label = getLabel();
 
@@ -74,6 +75,35 @@ public final class Translator {
             }
 
             // TODO: add code for all other types of instructions
+            case SubtractInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new SubtractInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+            case MultiplyInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new MultiplyInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+            case DivideInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new DivideInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+            case PrintInstruction.OP_CODE -> {
+                String s = scan();
+                return new PrintInstruction(label, Register.valueOf(s));
+            }
+            case StoreInstruction.OP_CODE -> {
+                String r = scan();
+                String x = scan();
+                return new StoreInstruction(label, Register.valueOf(r), Integer.parseInt(x));
+            }
+            case JumpInstruction.OP_CODE -> {
+                String s = scan();
+                String L = scan();
+                return new JumpInstruction(label, Register.valueOf(s), L);
+            }
 
             // TODO: Then, replace the switch by using the Reflection API
 
