@@ -11,7 +11,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.Register.EAX;
+import static sml.Registers.Register.EBX;
 
 class PrintInstructionTest {
   private Machine machine;
@@ -50,5 +52,21 @@ class PrintInstructionTest {
     instruction.execute(machine);
     String output = outputStream.toString().trim();
     assertEquals(String.valueOf(machine.getRegisters().get(EAX)), output);
+  }
+
+  @Test
+  void equals_areEqual() {
+    registers.set(EAX, 10);
+    Instruction instruction = new PrintInstruction("A1", EAX);
+    Instruction instruction2 = new PrintInstruction("A1", EAX);
+    assertEquals(instruction, instruction2);
+  }
+
+  @Test
+  void equals_areNotEqual() {
+    registers.set(EAX, 10);
+    Instruction instruction = new PrintInstruction("A1", EAX);
+    Instruction instruction2 = new PrintInstruction(null, EAX);
+    assertNotEquals(instruction, instruction2);
   }
 }

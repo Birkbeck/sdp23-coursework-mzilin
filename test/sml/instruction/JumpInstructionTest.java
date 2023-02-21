@@ -1,14 +1,14 @@
 package sml.instruction;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sml.Instruction;
-import sml.Labels;
 import sml.Machine;
 import sml.Registers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static sml.Registers.Register.EAX;
 import static sml.Registers.Register.EBX;
 
@@ -30,7 +30,7 @@ class JumpInstructionTest {
   }
 
   @Test
-  void executeValid() {
+  void execute_sourceIsNotZero() {
     String label = "a1";
     int address = 0;
     registers.set(EAX, 5);
@@ -39,12 +39,12 @@ class JumpInstructionTest {
     add.execute(machine);
     machine.getLabels().addLabel(label, address);
     Instruction jump = new JumpInstruction(null, EAX, label);
-    Assertions.assertEquals(jump.execute(machine), address);
+    assertEquals(address, jump.execute(machine));
   }
 
   @Test
-  void executeNotValid() {
-    String label = "a1";
+  void execute_sourceEqualsZero() {
+    String label = "A1";
     int address = 0;
     registers.set(EAX, 5);
     registers.set(EBX, -5);
@@ -52,6 +52,22 @@ class JumpInstructionTest {
     add.execute(machine);
     machine.getLabels().addLabel(label, address);
     Instruction jump = new JumpInstruction(null, EAX, label);
-    Assertions.assertEquals(jump.execute(machine), -1);
+    assertEquals(-1, jump.execute(machine));
+  }
+
+  @Test
+  void executeNullLabel_throwsException() {
+    registers.set(EAX, 5);
+    Instruction jump = new JumpInstruction(null, EAX, null);
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> jump.execute(machine));
+    assertEquals("Label cannot be null", exception.getMessage());
+  }
+
+  @Test
+  void executeLabelNotFound_throwsException() {
+    registers.set(EAX, 5);
+    Instruction jump = new JumpInstruction(null, EAX, "L1");
+    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> jump.execute(machine));
+    assertEquals("Label 'L1' doesn't exist", exception.getMessage());
   }
 }
