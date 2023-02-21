@@ -8,6 +8,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.Register.EAX;
 import static sml.Registers.Register.EBX;
 
@@ -44,5 +46,23 @@ class SubtractInstructionTest {
     Instruction instruction = new SubtractInstruction(null, EAX, EBX);
     instruction.execute(machine);
     Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
+  }
+
+  @Test
+  void equals_areEqual() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubtractInstruction("A1", EAX, EBX);
+    Instruction instruction2 = new SubtractInstruction("A1", EAX, EBX);
+    assertEquals(instruction, instruction2);
+  }
+
+  @Test
+  void equals_areNotEqual() {
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubtractInstruction(null, EAX, EBX);
+    Instruction instruction2 = new SubtractInstruction("B4", EAX, EBX);
+    assertNotEquals(instruction, instruction2);
   }
 }

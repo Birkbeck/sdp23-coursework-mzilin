@@ -39,7 +39,6 @@ public final class Translator {
 
             // Each iteration processes line and reads the next input line into "line"
             while (sc.hasNextLine()) {
-                System.out.println(sc.nextLine());
                 line = sc.nextLine();
                 String label = getLabel();
 

@@ -8,6 +8,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.Register.EAX;
 
 class StoreInstructionTest {
@@ -41,5 +43,21 @@ class StoreInstructionTest {
     Instruction instruction = new StoreInstruction(null, EAX, 9);
     instruction.execute(machine);
     Assertions.assertEquals(9, machine.getRegisters().get(EAX));
+  }
+
+  @Test
+  void equals_areEqual() {
+    registers.set(EAX, 10);
+    Instruction instruction = new StoreInstruction("A1", EAX, 6);
+    Instruction instruction2 = new StoreInstruction("A1", EAX, 6);
+    assertEquals(instruction, instruction2);
+  }
+
+  @Test
+  void equals_areNotEqual() {
+    registers.set(EAX, 10);
+    Instruction instruction = new StoreInstruction(null, EAX, 7);
+    Instruction instruction2 = new StoreInstruction("B4", EAX, 8);
+    assertNotEquals(instruction, instruction2);
   }
 }
