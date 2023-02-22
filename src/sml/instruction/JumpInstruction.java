@@ -14,28 +14,28 @@ import java.util.Objects;
 
 public class JumpInstruction extends Instruction {
 	private final RegisterName source;
-	private final String jumpToLabel;
+	private final String address;
 
 	public static final String OP_CODE = "jnz";
 
-	public JumpInstruction(String label, RegisterName source, String jumpToLabel) {
+	public JumpInstruction(String label, RegisterName source, String address) {
 		super(label, OP_CODE);
 		this.source = source;
-		this.jumpToLabel = jumpToLabel;
+		this.address = address;
 	}
 
 	@Override
 	public int execute(Machine m) {
 		int value = m.getRegisters().get(source);
 		if (value != 0) {
-			return m.getLabels().getAddress(jumpToLabel);
+			return m.getLabels().getAddress(address);
 		}
 		return NORMAL_PROGRAM_COUNTER_UPDATE;
 	}
 
 	@Override
 	public String toString() {
-		return getLabelString() + getOpcode() + " " + source + " " + jumpToLabel;
+		return getLabelString() + getOpcode() + " " + source + " " + address;
 	}
 
 	@Override
@@ -47,6 +47,6 @@ public class JumpInstruction extends Instruction {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(label, opcode, source, jumpToLabel);
+		return Objects.hash(label, opcode, source, address);
 	}
 }

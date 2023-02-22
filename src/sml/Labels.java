@@ -38,7 +38,8 @@ public final class Labels {
 		//       (Write an explanation.)
 		//       Add code to deal with non-existent labels.
 		// Answer: NullPointerException can be thrown here if passed label string is null
-		// or if the label isn't in the labels map
+		// or if the label isn't in the labels map. To prevent that, we'll add check for null
+		// and check if key exists in the map.
 		if (label == null)
 			throw new IllegalArgumentException("Label cannot be null");
 
