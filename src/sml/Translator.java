@@ -5,6 +5,8 @@ import sml.instruction.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,42 +70,29 @@ public final class Translator {
             return null;
 
         String opcode = scan();
+        String[] values = scanLine();
+
         switch (opcode) {
             case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new AddInstruction(label, Register.valueOf(values[0]), Register.valueOf(values[1]));
             }
-
-            // TODO: add code for all other types of instructions
             case SubInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new SubInstruction(label, Register.valueOf(values[0]), Register.valueOf(values[1]));
             }
             case MulInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new MulInstruction(label, Register.valueOf(values[0]), Register.valueOf(values[1]));
             }
             case DivInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new DivInstruction(label, Register.valueOf(values[0]), Register.valueOf(values[1]));
             }
             case OutInstruction.OP_CODE -> {
-                String s = scan();
-                return new OutInstruction(label, Register.valueOf(s));
+                return new OutInstruction(label, Register.valueOf(values[0]));
             }
             case MovInstruction.OP_CODE -> {
-                String r = scan();
-                String x = scan();
-                return new MovInstruction(label, Register.valueOf(r), Integer.parseInt(x));
+                return new MovInstruction(label, Register.valueOf(values[0]), Integer.parseInt(values[1]));
             }
             case JnzInstruction.OP_CODE -> {
-                String s = scan();
-                String L = scan();
-                return new JnzInstruction(label, Register.valueOf(s), L);
+                return new JnzInstruction(label, Register.valueOf(values[0]), values[1]);
             }
 
             // TODO: Then, replace the switch by using the Reflection API
@@ -144,5 +133,19 @@ public final class Translator {
             }
 
         return line;
+    }
+
+    /**
+     * Scans the remaining of the line after the label
+     *
+     * @return an array of values, can be either 1 or 2
+     */
+    private String[] scanLine() {
+        String value1 = scan();
+        String value2 = scan();
+
+        return value2 == null
+                ? new String[]{value1}
+                : new String[]{value1, value2};
     }
 }
