@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents labels class.
+ * <p>
+ * An instance keeps a map object of all the program labels and the addresses
+ * associated with them.
  *
  * @author Marius Zilinskas
  */

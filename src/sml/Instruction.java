@@ -3,7 +3,11 @@ package sml;
 // TODO: write a JavaDoc for the class
 
 /**
- * Represents an abstract instruction.
+ * Represents an abstract instruction class.
+ * <p>
+ * Has 4 abstract methods that each subclass will have to override.
+ * <p>
+ * <em>execute, toString, equals and hashCode</em>
  *
  * @author Marius Zilinskas
  */

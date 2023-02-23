@@ -9,6 +9,10 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents a 'out' instruction class.
+ * <p>
+ * An instance prints the contents of the register in the console.
+ *
  * @author Marius Zilinskas
  */
 
@@ -22,6 +26,12 @@ public class PrintInstruction extends Instruction {
 		this.source = source;
 	}
 
+	/**
+	 * Prints the contents of register s in the console.
+	 *
+	 * @param m the machine the instruction runs on
+	 * @return NORMAL_PROGRAM_COUNTER_UPDATE
+	 */
 	@Override
 	public int execute(Machine m) {
 		int value = m.getRegisters().get(source);

@@ -9,6 +9,11 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents a 'jnz' instruction class.
+ * <p>
+ * An instance checks if the contents of the register is not zero, then returns
+ * an address for the next instruction.
+ *
  * @author Marius Zilinskas
  */
 
@@ -24,6 +29,14 @@ public class JumpInstruction extends Instruction {
 		this.address = address;
 	}
 
+	/**
+	 * Checks if the contents of register s is not zero, then returns an address
+	 * for the next instruction.
+	 *
+	 * @param m the machine the instruction runs on
+	 * @return NORMAL_PROGRAM_COUNTER_UPDATE if source register content is zero,
+	 * 			otherwise returns an address for the next instruction
+	 */
 	@Override
 	public int execute(Machine m) {
 		int value = m.getRegisters().get(source);

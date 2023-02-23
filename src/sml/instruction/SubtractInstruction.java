@@ -9,6 +9,11 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents a 'sub' instruction class.
+ * <p>
+ * An instance subtracts the contents of one registers from another and stores the
+ * result in the first one.
+ *
  * @author Marius Zilinskas
  */
 
@@ -24,6 +29,13 @@ public class SubtractInstruction extends Instruction {
 		this.source = source;
 	}
 
+	/**
+	 * Subtracts the contents of register s from the contents of r and stores
+	 * the result in register r.
+	 *
+	 * @param m the machine the instruction runs on
+	 * @return NORMAL_PROGRAM_COUNTER_UPDATE
+	 */
 	@Override
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);

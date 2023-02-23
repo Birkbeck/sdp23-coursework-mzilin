@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents registers class.
+ * <p>
+ * An instance holds an object of a register, and it's content's value.
  *
  * @author Marius Zilinskas
  */

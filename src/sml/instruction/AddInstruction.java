@@ -9,6 +9,11 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents an 'add' instruction class.
+ * <p>
+ * An instance adds the contents of two registers and stores the
+ * result in the first one.
+ *
  * @author Marius Zilinskas
  */
 
@@ -24,6 +29,12 @@ public class AddInstruction extends Instruction {
 		this.source = source;
 	}
 
+	/**
+	 * Adds the contents of registers r and s and stores the result in register r.
+	 *
+	 * @param m the machine the instruction runs on
+	 * @return NORMAL_PROGRAM_COUNTER_UPDATE
+	 */
 	@Override
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);

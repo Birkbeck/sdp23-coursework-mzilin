@@ -15,6 +15,8 @@ import static sml.Registers.Register;
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
+ * An instance reads the program and translates it into an internal form.
+ *
  * @author Marius Zilinskas
  */
 public final class Translator {

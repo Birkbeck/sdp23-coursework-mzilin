@@ -9,6 +9,10 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Represents a 'mov' instruction class.
+ * <p>
+ * An instance stores the given value in the register.
+ *
  * @author Marius Zilinskas
  */
 
@@ -24,6 +28,12 @@ public class StoreInstruction extends Instruction {
 		this.value = value;
 	}
 
+	/**
+	 * Stores integer x in register r.
+	 *
+	 * @param m the machine the instruction runs on
+	 * @return NORMAL_PROGRAM_COUNTER_UPDATE
+	 */
 	@Override
 	public int execute(Machine m) {
 		m.getRegisters().set(source, value);
