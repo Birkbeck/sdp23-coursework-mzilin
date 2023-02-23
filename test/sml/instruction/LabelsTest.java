@@ -23,8 +23,9 @@ public class LabelsTest {
     @Test
     void addLabel_tryingToAddDuplicateLabel() {
         this.labels.addLabel("A1", 0);
-        this.labels.addLabel("A1", 5);
-        assertEquals(0, this.labels.getAddress("A1"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> this.labels.addLabel("A1", 5));
+        assertEquals("Label 'A1' already exists", exception.getMessage());
     }
 
     @Test
