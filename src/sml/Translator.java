@@ -76,34 +76,34 @@ public final class Translator {
             }
 
             // TODO: add code for all other types of instructions
-            case SubtractInstruction.OP_CODE -> {
+            case SubInstruction.OP_CODE -> {
                 String r = scan();
                 String s = scan();
-                return new SubtractInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
             }
-            case MultiplyInstruction.OP_CODE -> {
+            case MulInstruction.OP_CODE -> {
                 String r = scan();
                 String s = scan();
-                return new MultiplyInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
             }
-            case DivideInstruction.OP_CODE -> {
+            case DivInstruction.OP_CODE -> {
                 String r = scan();
                 String s = scan();
-                return new DivideInstruction(label, Register.valueOf(r), Register.valueOf(s));
+                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
             }
-            case PrintInstruction.OP_CODE -> {
+            case OutInstruction.OP_CODE -> {
                 String s = scan();
-                return new PrintInstruction(label, Register.valueOf(s));
+                return new OutInstruction(label, Register.valueOf(s));
             }
-            case StoreInstruction.OP_CODE -> {
+            case MovInstruction.OP_CODE -> {
                 String r = scan();
                 String x = scan();
-                return new StoreInstruction(label, Register.valueOf(r), Integer.parseInt(x));
+                return new MovInstruction(label, Register.valueOf(r), Integer.parseInt(x));
             }
-            case JumpInstruction.OP_CODE -> {
+            case JnzInstruction.OP_CODE -> {
                 String s = scan();
                 String L = scan();
-                return new JumpInstruction(label, Register.valueOf(s), L);
+                return new JnzInstruction(label, Register.valueOf(s), L);
             }
 
             // TODO: Then, replace the switch by using the Reflection API

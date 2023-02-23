@@ -17,13 +17,13 @@ import java.util.Objects;
  * @author Marius Zilinskas
  */
 
-public class DivideInstruction extends Instruction {
+public class DivInstruction extends Instruction {
 	private final RegisterName result;
 	private final RegisterName source;
 
 	public static final String OP_CODE = "div";
 
-	public DivideInstruction(String label, RegisterName result, RegisterName source) {
+	public DivInstruction(String label, RegisterName result, RegisterName source) {
 		super(label, OP_CODE);
 		this.result = result;
 		this.source = source;
@@ -52,7 +52,7 @@ public class DivideInstruction extends Instruction {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!(obj instanceof DivideInstruction)) return false;
+		if (!(obj instanceof DivInstruction)) return false;
 		return Objects.equals(this.toString(), obj.toString());
 	}
 

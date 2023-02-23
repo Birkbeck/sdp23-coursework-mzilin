@@ -16,12 +16,12 @@ import java.util.Objects;
  * @author Marius Zilinskas
  */
 
-public class PrintInstruction extends Instruction {
+public class OutInstruction extends Instruction {
 	private final RegisterName source;
 
 	public static final String OP_CODE = "out";
 
-	public PrintInstruction(String label, RegisterName source) {
+	public OutInstruction(String label, RegisterName source) {
 		super(label, OP_CODE);
 		this.source = source;
 	}
@@ -47,7 +47,7 @@ public class PrintInstruction extends Instruction {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!(obj instanceof PrintInstruction)) return false;
+		if (!(obj instanceof OutInstruction)) return false;
 		return Objects.equals(this.toString(), obj.toString());
 	}
 

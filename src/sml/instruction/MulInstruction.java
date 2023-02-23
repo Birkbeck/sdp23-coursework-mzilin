@@ -9,29 +9,28 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
- * Represents a 'sub' instruction class.
+ * Represents a 'mul' instruction class.
  * <p>
- * An instance subtracts the contents of one registers from another and stores the
+ * An instance multiplies the contents of one register by another and stores the
  * result in the first one.
  *
  * @author Marius Zilinskas
  */
 
-public class SubtractInstruction extends Instruction {
+public class MulInstruction extends Instruction {
 	private final RegisterName result;
 	private final RegisterName source;
 
-	public static final String OP_CODE = "sub";
+	public static final String OP_CODE = "mul";
 
-	public SubtractInstruction(String label, RegisterName result, RegisterName source) {
+	public MulInstruction(String label, RegisterName result, RegisterName source) {
 		super(label, OP_CODE);
 		this.result = result;
 		this.source = source;
 	}
 
 	/**
-	 * Subtracts the contents of register s from the contents of r and stores
-	 * the result in register r.
+	 * Multiplies the contents of registers r and s and store the result in register r.
 	 *
 	 * @param m the machine the instruction runs on
 	 * @return NORMAL_PROGRAM_COUNTER_UPDATE
@@ -40,7 +39,7 @@ public class SubtractInstruction extends Instruction {
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);
 		int value2 = m.getRegisters().get(source);
-		m.getRegisters().set(result, value1 - value2);
+		m.getRegisters().set(result, value1 * value2);
 		return NORMAL_PROGRAM_COUNTER_UPDATE;
 	}
 
@@ -52,7 +51,7 @@ public class SubtractInstruction extends Instruction {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!(obj instanceof SubtractInstruction)) return false;
+		if (!(obj instanceof MulInstruction)) return false;
 		return Objects.equals(this.toString(), obj.toString());
 	}
 

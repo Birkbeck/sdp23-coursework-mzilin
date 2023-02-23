@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.Register.EAX;
 import static sml.Registers.Register.EBX;
 
-class SubtractInstructionTest {
+class DivInstructionTest {
   private Machine machine;
   private Registers registers;
 
@@ -32,37 +32,46 @@ class SubtractInstructionTest {
 
   @Test
   void executeValid() {
-    registers.set(EAX, 6);
+    registers.set(EAX, 15);
     registers.set(EBX, 3);
-    Instruction instruction = new SubtractInstruction(null, EAX, EBX);
+    Instruction instruction = new DivInstruction(null, EAX, EBX);
+    instruction.execute(machine);
+    Assertions.assertEquals(5, machine.getRegisters().get(EAX));
+  }
+
+  @Test
+  void executeValidTwo() {
+    registers.set(EAX, -15);
+    registers.set(EBX, 3);
+    Instruction instruction = new DivInstruction(null, EAX, EBX);
+    instruction.execute(machine);
+    Assertions.assertEquals(-5, machine.getRegisters().get(EAX));
+  }
+
+  @Test
+  void executeValidThree() {
+    registers.set(EAX, 10);
+    registers.set(EBX, 3);
+    Instruction instruction = new DivInstruction(null, EAX, EBX);
     instruction.execute(machine);
     Assertions.assertEquals(3, machine.getRegisters().get(EAX));
   }
 
   @Test
-  void executeValidTwo() {
-    registers.set(EAX, -5);
-    registers.set(EBX, 6);
-    Instruction instruction = new SubtractInstruction(null, EAX, EBX);
-    instruction.execute(machine);
-    Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
-  }
-
-  @Test
   void equals_areEqual() {
-    registers.set(EAX, 5);
-    registers.set(EBX, 6);
-    Instruction instruction = new SubtractInstruction("A1", EAX, EBX);
-    Instruction instruction2 = new SubtractInstruction("A1", EAX, EBX);
+    registers.set(EAX, 10);
+    registers.set(EBX, 3);
+    Instruction instruction = new DivInstruction("A1", EAX, EBX);
+    Instruction instruction2 = new DivInstruction("A1", EAX, EBX);
     assertEquals(instruction, instruction2);
   }
 
   @Test
   void equals_areNotEqual() {
-    registers.set(EAX, 5);
-    registers.set(EBX, 6);
-    Instruction instruction = new SubtractInstruction(null, EAX, EBX);
-    Instruction instruction2 = new SubtractInstruction("B4", EAX, EBX);
+    registers.set(EAX, 10);
+    registers.set(EBX, 3);
+    Instruction instruction = new DivInstruction(null, EAX, EBX);
+    Instruction instruction2 = new DivInstruction("B4", EAX, EBX);
     assertNotEquals(instruction, instruction2);
   }
 }
