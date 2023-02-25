@@ -1,6 +1,4 @@
-package sml.instruction;
-
-import sml.Instruction;
+package sml;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,22 +7,27 @@ import static sml.Registers.Register;
 
 
 /**
- * Represents an instruction factory class that returns an instruction
+ * Represents an instruction factory concrete class that returns an instruction
  * based on the provided opcode
  *
  * @author Marius Zilinskas
  */
-public class InstructionFactory {
 
-    private static final InstructionFactory instance = new InstructionFactory();
+public class InstructionFactoryImpl implements InstructionFactory {
+
+    private static final InstructionFactory instance = new InstructionFactoryImpl();
 
     /**
      * Singleton pattern used to return only one instance
      */
-    public static InstructionFactory getInstance() {
+    private InstructionFactoryImpl() {}
+
+    @Override
+    public InstructionFactory getInstance() {
         return instance;
     }
 
+    @Override
     public Instruction createInstruction(String opcode, String[] params) {
         String namePrefix = opcode.substring(0, 1).toUpperCase() + opcode.substring(1);
 

@@ -1,13 +1,13 @@
 package sml;
 
-import sml.instruction.*;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static sml.Registers.Register;
 
 /**
  * This class ....
@@ -25,7 +25,11 @@ public final class Translator {
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
-    private final InstructionFactory factory = InstructionFactory.getInstance();
+    /**
+     * Dependency injection of instruction factory
+     */
+    private final BeanFactory beanFactory = new ClassPathXmlApplicationContext("/beans.xml");
+    private final InstructionFactory factory = (InstructionFactory) beanFactory.getBean("ins-factory");
 
     public Translator(String fileName) {
         this.fileName =  fileName;
@@ -74,7 +78,7 @@ public final class Translator {
 
         // TODO: Next, use dependency injection to allow this machine class
         //       to work with different sets of opcodes (different CPUs)
-        return factory.createInstruction(opcode, values);
+        return factory.getInstance().createInstruction(opcode, values);
     }
 
 
