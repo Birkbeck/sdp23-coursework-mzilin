@@ -16,13 +16,13 @@ import java.util.Objects;
  * @author Marius Zilinskas
  */
 
-public class StoreInstruction extends Instruction {
+public class MovInstruction extends Instruction {
 	private final RegisterName source;
 	private final int value;
 
 	public static final String OP_CODE = "mov";
 
-	public StoreInstruction(String label, RegisterName source, int value) {
+	public MovInstruction(String label, RegisterName source, int value) {
 		super(label, OP_CODE);
 		this.source = source;
 		this.value = value;
@@ -48,7 +48,7 @@ public class StoreInstruction extends Instruction {
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		if (!(obj instanceof StoreInstruction)) return false;
+		if (!(obj instanceof MovInstruction)) return false;
 		return Objects.equals(this.toString(), obj.toString());
 	}
 

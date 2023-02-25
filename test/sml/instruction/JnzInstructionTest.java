@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static sml.Registers.Register.EAX;
 import static sml.Registers.Register.EBX;
 
-class JumpInstructionTest {
+class JnzInstructionTest {
   private Machine machine;
   private Registers registers;
 
@@ -38,7 +38,7 @@ class JumpInstructionTest {
     Instruction add = new AddInstruction(label, EAX, EBX);
     add.execute(machine);
     machine.getLabels().addLabel(label, address);
-    Instruction jump = new JumpInstruction(null, EAX, label);
+    Instruction jump = new JnzInstruction(null, EAX, label);
     assertEquals(address, jump.execute(machine));
   }
 
@@ -51,14 +51,14 @@ class JumpInstructionTest {
     Instruction add = new AddInstruction(label, EAX, EBX);
     add.execute(machine);
     machine.getLabels().addLabel(label, address);
-    Instruction jump = new JumpInstruction(null, EAX, label);
+    Instruction jump = new JnzInstruction(null, EAX, label);
     assertEquals(-1, jump.execute(machine));
   }
 
   @Test
   void executeNullLabel_throwsException() {
     registers.set(EAX, 5);
-    Instruction jump = new JumpInstruction(null, EAX, null);
+    Instruction jump = new JnzInstruction(null, EAX, null);
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> jump.execute(machine));
     assertEquals("Label cannot be null", exception.getMessage());
   }
@@ -66,7 +66,7 @@ class JumpInstructionTest {
   @Test
   void executeLabelNotFound_throwsException() {
     registers.set(EAX, 5);
-    Instruction jump = new JumpInstruction(null, EAX, "L1");
+    Instruction jump = new JnzInstruction(null, EAX, "L1");
     IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> jump.execute(machine));
     assertEquals("Label 'L1' doesn't exist", exception.getMessage());
   }

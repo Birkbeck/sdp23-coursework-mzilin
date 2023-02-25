@@ -4,9 +4,10 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static sml.Registers.Register;
 
@@ -67,54 +68,46 @@ public final class Translator {
         if (line.isEmpty())
             return null;
 
-        String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
+        String[] values = scanLine();
+        String opcode = values[0];
+        values[0] = label;
 
-            // TODO: add code for all other types of instructions
-            case SubtractInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new SubtractInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case MultiplyInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MultiplyInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case DivideInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivideInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-            case PrintInstruction.OP_CODE -> {
-                String s = scan();
-                return new PrintInstruction(label, Register.valueOf(s));
-            }
-            case StoreInstruction.OP_CODE -> {
-                String r = scan();
-                String x = scan();
-                return new StoreInstruction(label, Register.valueOf(r), Integer.parseInt(x));
-            }
-            case JumpInstruction.OP_CODE -> {
-                String s = scan();
-                String L = scan();
-                return new JumpInstruction(label, Register.valueOf(s), L);
-            }
+        // TODO: Then, replace the switch by using the Reflection API
+        String namePrefix = opcode.substring(0, 1).toUpperCase() + opcode.substring(1);
 
-            // TODO: Then, replace the switch by using the Reflection API
+        try {
+            Class<?> instructionClass = Class.forName("sml.instruction." + namePrefix + "Instruction");
+            Constructor<?>[] constructors = instructionClass.getConstructors();
 
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
+            for (Constructor<?> constructor : constructors) {
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
 
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
+                if (parameterTypes.length == values.length) {
+                    Object[] arguments = new Object[values.length];
+
+                    for (int i = 0; i < values.length; i++) {
+                        Class<?> param = parameterTypes[i];
+                        if (param.getName().equals("sml.RegisterName")) {
+                            arguments[i] = Register.valueOf(values[i]);
+                        } else if (param == String.class) {
+                            arguments[i] = values[i];
+                        } else if (param == int.class) {
+                            arguments[i] = Integer.class.getConstructor(String.class).newInstance(values[i]);
+                        } else {
+                            throw new IllegalArgumentException("Unsupported argument type: " + param.getName());
+                        }
+                    }
+                    return (Instruction) constructor.newInstance(arguments);
+                }
             }
+            System.out.println("Unknown instruction: " + opcode);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                InvocationTargetException | NoSuchMethodException e) {
+            System.out.println("Unknown instruction: " + opcode);
         }
+
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
         return null;
     }
 
@@ -135,14 +128,32 @@ public final class Translator {
      */
     private String scan() {
         line = line.trim();
-
         for (int i = 0; i < line.length(); i++)
             if (Character.isWhitespace(line.charAt(i))) {
                 String word = line.substring(0, i);
                 line = line.substring(i);
                 return word;
             }
-
         return line;
+    }
+
+    /**
+     * Scans the entire line and
+     * @return an array of 2 or 3 elements
+     */
+    private String[] scanLine() {
+        String opcode = scan();
+        String value1 = scan();
+        int lineLengthBefore = line.length();
+        String value2 = scan();
+        int lineLengthAfter = line.length();
+
+        // When value2 is missing like in 'out' command, scan() returns the same value twice!
+        // Without changing scan() method, the workaround would be to check
+        // if the line length before scanning value2 is the same as after the scan
+        // If the line lengths are the same -> value2 was missing
+        return lineLengthBefore == lineLengthAfter
+                ? new String[]{opcode, value1}
+                : new String[]{opcode, value1, value2};
     }
 }

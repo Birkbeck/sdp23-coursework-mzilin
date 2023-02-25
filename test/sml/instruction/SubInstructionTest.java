@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static sml.Registers.Register.EAX;
 import static sml.Registers.Register.EBX;
 
-class MultiplyInstructionTest {
+class SubInstructionTest {
   private Machine machine;
   private Registers registers;
 
@@ -32,37 +32,37 @@ class MultiplyInstructionTest {
 
   @Test
   void executeValid() {
-    registers.set(EAX, 5);
-    registers.set(EBX, 6);
-    Instruction instruction = new MultiplyInstruction(null, EAX, EBX);
+    registers.set(EAX, 6);
+    registers.set(EBX, 3);
+    Instruction instruction = new SubInstruction(null, EAX, EBX);
     instruction.execute(machine);
-    Assertions.assertEquals(30, machine.getRegisters().get(EAX));
+    Assertions.assertEquals(3, machine.getRegisters().get(EAX));
   }
 
   @Test
   void executeValidTwo() {
     registers.set(EAX, -5);
     registers.set(EBX, 6);
-    Instruction instruction = new MultiplyInstruction(null, EAX, EBX);
+    Instruction instruction = new SubInstruction(null, EAX, EBX);
     instruction.execute(machine);
-    Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
+    Assertions.assertEquals(-11, machine.getRegisters().get(EAX));
   }
 
   @Test
   void equals_areEqual() {
-    registers.set(EAX, 10);
-    registers.set(EBX, 3);
-    Instruction instruction = new MultiplyInstruction("A1", EAX, EBX);
-    Instruction instruction2 = new MultiplyInstruction("A1", EAX, EBX);
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubInstruction("A1", EAX, EBX);
+    Instruction instruction2 = new SubInstruction("A1", EAX, EBX);
     assertEquals(instruction, instruction2);
   }
 
   @Test
   void equals_areNotEqual() {
-    registers.set(EAX, 10);
-    registers.set(EBX, 3);
-    Instruction instruction = new MultiplyInstruction("A1", EAX, EBX);
-    Instruction instruction2 = new MultiplyInstruction(null, EAX, EBX);
+    registers.set(EAX, 5);
+    registers.set(EBX, 6);
+    Instruction instruction = new SubInstruction(null, EAX, EBX);
+    Instruction instruction2 = new SubInstruction("B4", EAX, EBX);
     assertNotEquals(instruction, instruction2);
   }
 }
