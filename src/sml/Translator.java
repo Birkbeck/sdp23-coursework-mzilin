@@ -4,8 +4,6 @@ import sml.instruction.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -26,6 +24,8 @@ public final class Translator {
 
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
+
+    private final InstructionFactory factory = InstructionFactory.getInstance();
 
     public Translator(String fileName) {
         this.fileName =  fileName;
@@ -72,43 +72,9 @@ public final class Translator {
         String opcode = values[0];
         values[0] = label;
 
-        // TODO: Then, replace the switch by using the Reflection API
-        String namePrefix = opcode.substring(0, 1).toUpperCase() + opcode.substring(1);
-
-        try {
-            Class<?> instructionClass = Class.forName("sml.instruction." + namePrefix + "Instruction");
-            Constructor<?>[] constructors = instructionClass.getConstructors();
-
-            for (Constructor<?> constructor : constructors) {
-                Class<?>[] parameterTypes = constructor.getParameterTypes();
-
-                if (parameterTypes.length == values.length) {
-                    Object[] arguments = new Object[values.length];
-
-                    for (int i = 0; i < values.length; i++) {
-                        Class<?> param = parameterTypes[i];
-                        if (param.getName().equals("sml.RegisterName")) {
-                            arguments[i] = Register.valueOf(values[i]);
-                        } else if (param == String.class) {
-                            arguments[i] = values[i];
-                        } else if (param == int.class) {
-                            arguments[i] = Integer.class.getConstructor(String.class).newInstance(values[i]);
-                        } else {
-                            throw new IllegalArgumentException("Unsupported argument type: " + param.getName());
-                        }
-                    }
-                    return (Instruction) constructor.newInstance(arguments);
-                }
-            }
-            System.out.println("Unknown instruction: " + opcode);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                InvocationTargetException | NoSuchMethodException e) {
-            System.out.println("Unknown instruction: " + opcode);
-        }
-
         // TODO: Next, use dependency injection to allow this machine class
         //       to work with different sets of opcodes (different CPUs)
-        return null;
+        return factory.createInstruction(opcode, values);
     }
 
 
