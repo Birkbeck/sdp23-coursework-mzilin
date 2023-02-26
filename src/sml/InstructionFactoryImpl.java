@@ -15,18 +15,6 @@ import static sml.Registers.Register;
 
 public class InstructionFactoryImpl implements InstructionFactory {
 
-    private static final InstructionFactory instance = new InstructionFactoryImpl();
-
-    /**
-     * Singleton pattern used to return only one instance
-     */
-    private InstructionFactoryImpl() {}
-
-    @Override
-    public InstructionFactory getInstance() {
-        return instance;
-    }
-
     @Override
     public Instruction createInstruction(String opcode, String[] params) {
         String namePrefix = opcode.substring(0, 1).toUpperCase() + opcode.substring(1);

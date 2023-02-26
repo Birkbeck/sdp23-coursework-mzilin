@@ -7,6 +7,5 @@ package sml;
  * @author Marius Zilinskas
  */
 public interface InstructionFactory {
-    InstructionFactory getInstance();
     Instruction createInstruction(String opcode, String[] params);
 }

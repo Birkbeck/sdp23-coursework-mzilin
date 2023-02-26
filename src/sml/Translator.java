@@ -27,6 +27,10 @@ public final class Translator {
 
     /**
      * Dependency injection of instruction factory
+     *
+     * Note: My preferred method would have been using @Autowired,
+     * however I didn't get it to work, as for some reason I kept getting an error "this.factory is null".
+     * Therefore, I used beanFactory here as a workaround.
      */
     private final BeanFactory beanFactory = new ClassPathXmlApplicationContext("/beans.xml");
     private final InstructionFactory factory = (InstructionFactory) beanFactory.getBean("ins-factory");
@@ -78,7 +82,7 @@ public final class Translator {
 
         // TODO: Next, use dependency injection to allow this machine class
         //       to work with different sets of opcodes (different CPUs)
-        return factory.getInstance().createInstruction(opcode, values);
+        return factory.createInstruction(opcode, values);
     }
 
 
