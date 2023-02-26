@@ -78,7 +78,7 @@ public final class Translator {
 
         // TODO: Next, use dependency injection to allow this machine class
         //       to work with different sets of opcodes (different CPUs)
-        return factory.getInstance().createInstruction(opcode, values);
+        return factory.createInstruction(opcode, values);
     }
 
 
